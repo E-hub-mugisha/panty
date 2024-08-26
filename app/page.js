@@ -14,6 +14,7 @@ import {
 } from 'firebase/firestore'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { getAnalytics, isSupported } from 'firebase/analytics';
 
 export default function Home() {
   const [inventory, setInventory] = useState([])
@@ -115,6 +116,15 @@ export default function Home() {
   const clearSearch = () => {
     setSearchQuery('')
   }
+
+  useEffect(() => {
+    const initAnalytics = async () => {
+      if (typeof window !== 'undefined' && (await isSupported())) {
+        const analytics = getAnalytics();
+      }
+    };
+    initAnalytics();
+  }, []);
 
   return (
     <Box
